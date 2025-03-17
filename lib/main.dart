@@ -1,8 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:local_notification/services/firebase_message_service.dart';
 
 import 'home_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //INITIALIZE FIREBASE
+  await Firebase.initializeApp();
+
+  //INITIALIZE FIREBASE MESSAGING SERVICE
+  await FirebaseMessageService().init();
+
   runApp(const MyApp());
 }
 
