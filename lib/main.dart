@@ -1,17 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:local_notification/auth_page.dart';
 import 'package:local_notification/services/firebase_message_service.dart';
 
 import 'home_page.dart';
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
 
-  //INITIALIZE FIREBASE
+  // 1.INITIALIZE FIREBASE
   await Firebase.initializeApp();
 
-  //INITIALIZE FIREBASE MESSAGING SERVICE
+  // 2.INITIALIZE FIREBASE MESSAGING SERVICE
   await FirebaseMessageService().init();
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+
 
   runApp(const MyApp());
 }
@@ -19,7 +26,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +36,7 @@ class MyApp extends StatelessWidget {
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomePage(),
+      home: AuthPage(),
     );
   }
 }
